@@ -1,7 +1,6 @@
 using System.IO;
 using Photon.Pun;
 using Assets.Scripts.Constants;
-using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -48,7 +47,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         if (File.Exists(configSettingsFilepath))
         {
             var configJson = File.ReadAllText(configSettingsFilepath);
-            _configSettings = JsonConvert.DeserializeObject<GameConstants.ConfigSettings>(configJson);
+            _configSettings = JsonUtility.FromJson<GameConstants.ConfigSettings>(configJson);
         }
         else
             _configSettings = new GameConstants.ConfigSettings
@@ -77,7 +76,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
         var configSettingsFilepath = GetConfigSettingsFilepath();
         
-        var configJson = JsonConvert.SerializeObject(newSettings, Formatting.None);
+        var configJson = JsonUtility.ToJson(newSettings, false);
         File.WriteAllText(configSettingsFilepath, configJson);
     }
 

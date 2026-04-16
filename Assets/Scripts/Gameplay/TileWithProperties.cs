@@ -1,4 +1,3 @@
-using Newtonsoft.Json;
 using UnityEngine;
 
 public abstract class TileWithProperties : MonoBehaviour
@@ -8,6 +7,6 @@ public abstract class TileWithProperties : MonoBehaviour
 
     protected T LoadProperties<T>(string propertyJson)
     {
-        return JsonConvert.DeserializeObject<T>(propertyJson);
+        return JsonUtility.FromJson<T>(propertyJson);
     }
 }

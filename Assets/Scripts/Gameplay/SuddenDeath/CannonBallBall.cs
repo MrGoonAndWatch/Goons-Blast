@@ -39,7 +39,7 @@ public class CannonBallBall : MonoBehaviour
         }
         else
         {
-            var pushDirection = new Vector3(_rigidbody.velocity.x * _forceMultiplier, _yForce, _rigidbody.velocity.z * _forceMultiplier);
+            var pushDirection = new Vector3(_rigidbody.linearVelocity.x * _forceMultiplier, _yForce, _rigidbody.linearVelocity.z * _forceMultiplier);
             player.StartRagdoll(_playerRagdollDuration, pushDirection);
         }
     }

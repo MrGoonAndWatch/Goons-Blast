@@ -86,34 +86,34 @@ namespace Assets.Scripts.Constants
                 PowerupRemote
             };
         }
-
+        
         public class OfficialLevelList
         {
-            public List<string> CampaignLevels { get; set; }
-            public List<string> VsLevels { get; set; }
+            public List<string> CampaignLevels;
+            public List<string> VsLevels;
         }
 
         public class ConfigSettings
         {
-            public string Username { get; set; }
-            public bool InvertXAxisLook { get; set; }
-            public bool InvertYAxisLook { get; set; }
-            public float? SoundMasterVolume { get; set; }
-            public float? SoundMusicVolume { get; set; }
-            public float? SoundSfxVolume { get; set; }
+            public string Username;
+            public bool InvertXAxisLook;
+            public bool InvertYAxisLook;
+            public float? SoundMasterVolume;
+            public float? SoundMusicVolume;
+            public float? SoundSfxVolume;
         }
 
         public class MatchSettings
         {
-            public GameMatchType MatchType { get; set; }
-            public int TimerSeconds { get; set; }
-            public int KillsToWin { get; set; }
-            public SuddenDeathType SuddenDeathType { get; set; }
-            public int SuddenDeathStartsAt { get; set; }
-            public bool RunBombTimerWhenHeld { get; set; }
-            public bool AllowDetonationsWhenHeld { get; set; }
-            public int SongNumber { get; set; }
-            public byte MaxPlayers { get; set; }
+            public GameMatchType MatchType;
+            public int TimerSeconds;
+            public int KillsToWin;
+            public SuddenDeathType SuddenDeathType;
+            public int SuddenDeathStartsAt;
+            public bool RunBombTimerWhenHeld;
+            public bool AllowDetonationsWhenHeld;
+            public int SongNumber;
+            public byte MaxPlayers;
         }
 
         public const string ConfigSettingsFilename = "goonsblast.settings";

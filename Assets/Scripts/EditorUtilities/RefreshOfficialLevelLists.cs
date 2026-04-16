@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using System.Linq;
 using Assets.Scripts.Constants;
-using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 using File = System.IO.File;
@@ -36,7 +35,7 @@ public class RefreshOfficialLevelLists : Editor
 
             foreach(var vsLevel in officialLevelList.VsLevels)
                 Debug.Log($"VS Level: {vsLevel}");
-            var officialLevelListJson = JsonConvert.SerializeObject(officialLevelList, Formatting.None);
+            var officialLevelListJson = JsonUtility.ToJson(officialLevelList, false);
             File.WriteAllText(levelListFilePath, officialLevelListJson);
         }
 

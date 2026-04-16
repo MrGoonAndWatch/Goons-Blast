@@ -25,7 +25,7 @@ namespace Assets.Scripts.MainMenu
         private void IdiotProofing()
         {
             Debug.Log("IdiotProofing");
-            _menus = FindObjectsOfType<Menu>(true);
+            _menus = FindObjectsByType<Menu>(FindObjectsInactive.Include);
             for(var i = 0; i < _menus.Length; i++)
                 CloseMenu(_menus[i]);
             Debug.Log($"_menus.Length = {_menus.Length}");

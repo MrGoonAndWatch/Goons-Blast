@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Assets.Scripts.Constants;
-using Newtonsoft.Json;
 using Photon.Pun;
 using TMPro;
 using Unity.VisualScripting;
@@ -200,7 +199,7 @@ public class LevelEditorController : MonoBehaviour
         try
         {
             var levelDataJson = File.ReadAllText(selectedMap);
-            loadedLevelData = JsonConvert.DeserializeObject<LevelData>(levelDataJson);
+            loadedLevelData = JsonUtility.FromJson<LevelData>(levelDataJson);
         }
         catch (Exception e)
         {

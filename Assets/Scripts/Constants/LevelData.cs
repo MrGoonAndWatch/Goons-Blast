@@ -7,9 +7,9 @@ public class LevelData
         Tiles = new List<TileData>();
     }
 
-    public LevelSong Song { get; set; }
-    public LevelSkin Skin { get; set; }
-    public List<TileData> Tiles { get; set; }
+    public LevelSong Song;
+    public LevelSkin Skin;
+    public List<TileData> Tiles;
 }
 
 public class TileData

@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using System.Linq;
 using Assets.Scripts.Constants;
-using Newtonsoft.Json;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
@@ -43,7 +42,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         {
             LoadLevel();
             var matchSettings = RoomManager.GetMatchSettings();
-            var matchSettingsJson = JsonConvert.SerializeObject(matchSettings, Formatting.None);
+            var matchSettingsJson = JsonUtility.ToJson(matchSettings, false);
             _photonView.RPC(nameof(SetupMatchRules), RpcTarget.All, matchSettingsJson);
             SetupPlayerSpawns();
             InitializeOnePerGameItems(matchSettings);
@@ -61,7 +60,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void SetupMatchRules(string matchSettingsJson)
     {
-        var matchSettings = JsonConvert.DeserializeObject<GameConstants.MatchSettings>(matchSettingsJson);
+        var matchSettings = JsonUtility.FromJson<GameConstants.MatchSettings>(matchSettingsJson);
         if (matchSettings == null)
         {
             Debug.LogError("Could not load match settings from provided json in RPC call!");
@@ -117,7 +116,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     private void LoadLevel(string levelDataJson)
     {
-        var levelData = JsonConvert.DeserializeObject<LevelData>(levelDataJson);
+        var levelData = JsonUtility.FromJson<LevelData>(levelDataJson);
         var levelLoader = FindObjectOfType<LevelLoader>();
         if (levelLoader == null)
             Debug.LogError("Could not find a LevelLoader in the Game scene, cannot load the game!");
@@ -130,7 +129,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.IsMasterClient) return;
 
         var numPlayers = (int)PhotonNetwork.CurrentRoom.PlayerCount;
-        var playersFound = FindObjectsOfType<PlayerController>();
+        var playersFound = FindObjectsByType<PlayerController>();
         if (playersFound.Length != numPlayers) return;
         _matchRulesManager.UpdatePlayerList(playersFound);
         _refreshPlayerList = false;
@@ -154,7 +153,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.IsMasterClient)
             FindObjectOfType<MatchRulesManager>().ProcessMatchEnd();
 
-        var allPlayers = FindObjectsOfType<PlayerController>();
+        var allPlayers = FindObjectsByType<PlayerController>();
         for (var i = 0; i < allPlayers.Length; i++)
             allPlayers[i].EndMatch();
         
@@ -186,7 +185,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     private static Vector3 GetSpawnPoint()
     {
-        var spawnPoints = FindObjectsOfType<PlayerSpawn>();
+        var spawnPoints = FindObjectsByType<PlayerSpawn>();
         var leastUsedSpawnPoints = spawnPoints.Min(p => p.TimesUsedInMatch);
         spawnPoints = spawnPoints.Where(p => p.TimesUsedInMatch == leastUsedSpawnPoints).ToArray();
         Vector3 spawnPoint;
@@ -206,7 +205,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     private void InitializeOnePerGameItems(GameConstants.MatchSettings matchSettings)
     {
         var spawner = PhotonNetwork.Instantiate(GameConstants.SpawnablePrefabs.PowerupSpawner, Vector3.zero, Quaternion.identity).GetComponent<PowerupSpawner>();
-        var destructables = FindObjectsOfType<Destructable>();
+        var destructables = FindObjectsByType<Destructable>();
         for (var i = 0; i < destructables.Length; i++)
             destructables[i].SetPowerupSpawner(spawner);
 

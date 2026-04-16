@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Assets.Scripts.Constants;
-using Newtonsoft.Json;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
@@ -124,7 +123,7 @@ namespace Assets.Scripts.MainMenu
             var options = new RoomOptions();
             var customProps = new ExitGames.Client.Photon.Hashtable();
             var matchSettings = RoomManager.GetMatchSettings();
-            var matchSettingsJson = JsonConvert.SerializeObject(matchSettings, Formatting.None);
+            var matchSettingsJson = JsonUtility.ToJson(matchSettings, false);
             customProps.Add(GameConstants.RoomCustomProperties.MatchSettings, matchSettingsJson);
             var matchMap = Path.GetFileName(selectedMap);
             customProps.Add(GameConstants.RoomCustomProperties.MatchMap, matchMap);
@@ -227,7 +226,7 @@ namespace Assets.Scripts.MainMenu
         private void LoadOfficialLevelList()
         {
             var officialLevelListJson = Resources.Load(GameConstants.LevelFilePaths.LevelListFilePath).ToString();
-            _officialLevelList = JsonConvert.DeserializeObject<GameConstants.OfficialLevelList>(officialLevelListJson);
+            _officialLevelList = JsonUtility.FromJson<GameConstants.OfficialLevelList>(officialLevelListJson);
         }
 
         private void LoadCustomLevelList()

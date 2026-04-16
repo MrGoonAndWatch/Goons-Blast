@@ -1,6 +1,5 @@
 using System;
 using Assets.Scripts.Constants;
-using Newtonsoft.Json;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
@@ -30,7 +29,7 @@ namespace Assets.Scripts.MainMenu
             if (roomInfo.CustomProperties.ContainsKey(GameConstants.RoomCustomProperties.MatchSettings))
             {
                 var matchSettingsJson = roomInfo.CustomProperties[GameConstants.RoomCustomProperties.MatchSettings].ToString();
-                var matchSettings = JsonConvert.DeserializeObject<GameConstants.MatchSettings>(matchSettingsJson);
+                var matchSettings = JsonUtility.FromJson<GameConstants.MatchSettings>(matchSettingsJson);
                 if (matchSettings != null)
                 {
                     _gameModeText.text = matchSettings.MatchType.ToString();

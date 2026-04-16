@@ -283,10 +283,10 @@ public class PlayerController : MonoBehaviour
     {
         if (_isHoldingSomething)
         {
-            if (_moveAmount.x != 0 || _moveAmount.z != 0 || _rigidbody.velocity.y != 0)
+            if (_moveAmount.x != 0 || _moveAmount.z != 0 || _rigidbody.linearVelocity.y != 0)
             {
                 var velocity = transform.TransformDirection(_moveAmount);
-                velocity.y = _rigidbody.velocity.y;
+                velocity.y = _rigidbody.linearVelocity.y;
                 _heldItem.Throw(velocity);
             }
             else

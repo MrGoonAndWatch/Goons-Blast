@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using Assets.Scripts.Constants;
-using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -207,7 +206,7 @@ public class SaveLevelController : MonoBehaviour
         if (!overwrite && File.Exists(filePath))
             return SaveLevelResult.ConfirmOverwrite;
         
-        var levelDataJson = JsonConvert.SerializeObject(_levelEditor.GetLevelData(), Formatting.None);
+        var levelDataJson = JsonUtility.ToJson(_levelEditor.GetLevelData(), false);
         File.WriteAllText(filePath, levelDataJson);
         return SaveLevelResult.Success;
     }

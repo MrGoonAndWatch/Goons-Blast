@@ -148,7 +148,7 @@ public abstract class Bomb : MonoBehaviour
     {
         _isRemoteControlled = isRemote;
         if (_spawnedByPlayer == null)
-            _spawnedByPlayer = FindObjectsOfType<PlayerController>()
+            _spawnedByPlayer = FindObjectsByType<PlayerController>()
                 .FirstOrDefault(pc => pc.GetPhotonViewId() == spawnedByPlayerPvId);
         _maxExplosionSize = _baseExplosionEndSize * firePower;
         BombNumber = bombNumber;

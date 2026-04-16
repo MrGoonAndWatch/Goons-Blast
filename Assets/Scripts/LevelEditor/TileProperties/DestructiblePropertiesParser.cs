@@ -1,6 +1,5 @@
 using System;
 using Assets.Scripts.Constants;
-using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,7 +23,7 @@ public class DestructiblePropertiesParser : TilePropertyParser
             return;
         }
         
-        var properties = JsonConvert.DeserializeObject<DestructibleBlockProperties>(propertiesJson);
+        var properties = JsonUtility.FromJson<DestructibleBlockProperties>(propertiesJson);
         _blockContentsPicker.value = (int) properties.Contents;
         _spawnProbabilitySlider.value = properties.SpawnPowerupChance;
     }
@@ -36,7 +35,7 @@ public class DestructiblePropertiesParser : TilePropertyParser
             Contents = (GameConstants.DestructableContents) _blockContentsPicker.value,
             SpawnPowerupChance = _spawnProbabilitySlider.value
         };
-        var propertiesJson = JsonConvert.SerializeObject(properties, Formatting.None);
+        var propertiesJson = JsonUtility.ToJson(properties, false);
         return propertiesJson;
     }
 
